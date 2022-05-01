@@ -24,22 +24,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployee(String firstName, String lastName, double salary, int departmentId) {
         String a = (firstName + " " + lastName);
+        Employee employee = createEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, departmentId);
         if (StringUtils.isAlphaSpace(a)) {
-            employeeSet.add(createEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, departmentId));
-            return createEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, departmentId);
+            employeeSet.add(employee);
+            return employee;
         } else {
-            throw new NotFoundEmployeeException();
+            throw new EmployeeNotFoundException();
         }
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName, double salary, int departmentId) {
         String a = (firstName + " " + lastName);
+        Employee employee = createEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, departmentId);
         if (StringUtils.isAlphaSpace(a)) {
-            employeeSet.remove(createEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, departmentId));
-            return createEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, departmentId);
+            employeeSet.remove(employee);
+            return employee;
         } else {
-            throw new NotFoundEmployeeException();
+            throw new EmployeeNotFoundException();
         }
     }
 
@@ -48,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeSet.stream()
                 .filter(employee -> employee.getDepartmentId().equals(departmentId))
                 .max(Comparator.comparingDouble(employee -> employee.getSalary()))
-                .orElseThrow(NotFoundEmployeeException::new);
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
@@ -56,11 +58,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeSet.stream()
                 .filter(employee -> employee.getDepartmentId().equals(departmentId))
                 .min(Comparator.comparingDouble(employee -> employee.getSalary()))
-                .orElseThrow(NotFoundEmployeeException::new);
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
-    public Set<String> printDepartmentEmployees(int departmentId) {
+    public Set<String> getDepartmentEmployees(int departmentId) {
         return employeeSet.stream()
                 .filter(employee -> employee.getDepartmentId().equals(departmentId))
                 .map(employee -> employee.getFirstName() + " " + employee.getLastName())
@@ -68,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Set<String> printEmployeesByDepartment() {
+    public Set<String> getEmployeesByDepartment() {
         return employeeSet.stream()
                 .sorted(Comparator.comparing(Employee::getDepartmentId))
                 .map(employee -> employee.getFirstName() + " " + employee.getLastName() + " departmentId" + employee.getDepartmentId())

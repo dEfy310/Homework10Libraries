@@ -11,9 +11,9 @@ public interface EmployeeService {
 
     Employee findDepartmentMinSalary(int departmentId);
 
-    Set<String> printDepartmentEmployees(int departmentId);
+    Set<String> getDepartmentEmployees(int departmentId);
 
-    Set<String> printEmployeesByDepartment();
+    Set<String> getEmployeesByDepartment();
 
     Set<Employee> getAllEmployees();
 }

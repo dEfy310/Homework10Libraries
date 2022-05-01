@@ -27,12 +27,12 @@ public class EmployeeDepartmentController {
     }
 
     @GetMapping(path = "/all/department")
-    public Set<String> printDepartmentEmployees(@RequestParam Integer departmentId) {
-        return employeeServiceImpl.printDepartmentEmployees(departmentId);
+    public Set<String> getDepartmentEmployees(@RequestParam Integer departmentId) {
+        return employeeServiceImpl.getDepartmentEmployees(departmentId);
     }
 
     @GetMapping(path = "/all")
-    public Set<String> printEmployeesByDepartment() {
-        return employeeServiceImpl.printEmployeesByDepartment();
+    public Set<String> getEmployeesByDepartment() {
+        return employeeServiceImpl.getEmployeesByDepartment();
     }
 }
